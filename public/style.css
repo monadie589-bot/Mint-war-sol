@@ -2,27 +2,14 @@
   box-sizing:border-box;
 }
 
-html, body{
+body{
   margin:0;
-  padding:0;
-  height:100%;
-  font-family:Arial Black, sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  background:radial-gradient(circle at top,#0f172a,#020617);
   color:white;
 }
 
-/* BACKGROUND */
-.bg{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:url('assets/bg.jpg') center/cover no-repeat;
-  z-index:-1;
-}
-
-/* CENTER LAYOUT */
-.game{
+.app{
   min-height:100vh;
   display:flex;
   justify-content:center;
@@ -30,111 +17,93 @@ html, body{
   padding:20px;
 }
 
-/* FRAME UTAMA */
-.frame{
+.card{
   width:100%;
-  max-width:400px;
+  max-width:420px;
+  background:#0b1220;
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:20px;
   padding:20px;
-  background:url('assets/frame.png') no-repeat center;
-  background-size:100% 100%;
-  text-align:center;
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
 }
 
-/* TITLE */
 h1{
-  margin-bottom:10px;
+  margin:0;
   font-size:26px;
 }
 
-/* WALLET TEXT */
-#wallet{
-  margin-top:10px;
-  font-size:12px;
-  opacity:0.8;
+.subtitle{
+  opacity:0.6;
+  font-size:13px;
+  margin-bottom:15px;
 }
 
-/* BUTTON IMAGE BASE */
+#wallet{
+  margin-top:8px;
+  font-size:12px;
+  opacity:0.7;
+}
+
+/* BUTTON */
 .btn{
   width:100%;
-  aspect-ratio:4/1;
-  background-position:center;
-  background-repeat:no-repeat;
-  background-size:100% 100%;
+  padding:14px;
   border:none;
-  cursor:pointer;
-  position:relative;
+  border-radius:12px;
   margin-top:12px;
-  transition:0.15s;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-/* CONNECT BUTTON IMAGE */
-.connect{
-  background-image:url('assets/btn-connect.png');
+.primary{
+  background:linear-gradient(90deg,#ff3b3b,#ff7b00);
+  color:white;
 }
 
-/* MINT BUTTON IMAGE */
-.mint{
-  background-image:url('assets/btn-mint.png');
+.secondary{
+  background:#111827;
+  color:white;
+  border:1px solid rgba(255,255,255,0.1);
 }
 
-/* TEXT DI TOMBOL */
-.btn span{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-weight:bold;
-  font-size:15px;
-  text-shadow:0 2px 4px rgba(0,0,0,0.8);
-}
-
-/* EFEK */
 .btn:hover{
-  filter:brightness(1.1);
+  opacity:0.9;
 }
 
 .btn:active{
-  transform:scale(0.95);
-}
-
-/* INPUT WRAP (PAKAI GAMBAR) */
-.inputWrap{
-  width:100%;
-  aspect-ratio:5/1;
-  background:url('assets/input.png') no-repeat center;
-  background-size:100% 100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-top:12px;
+  transform:scale(0.98);
 }
 
 /* INPUT */
-input{
-  width:80%;
-  background:transparent;
-  border:none;
-  outline:none;
-  text-align:center;
-  color:white;
-  font-size:16px;
+.input-group{
+  margin-top:15px;
 }
 
-/* SLIDER */
-.sliderBox{
+label{
+  font-size:12px;
+  opacity:0.7;
+}
+
+.slider-row{
   display:flex;
   align-items:center;
   gap:10px;
-  margin-top:12px;
+  margin-top:10px;
 }
 
-.sliderBox span{
-  font-size:12px;
-}
-
-/* RANGE */
 input[type=range]{
   flex:1;
+}
+
+input[type=number]{
+  width:100%;
+  margin-top:10px;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:#020617;
+  color:white;
 }
 
 /* RECEIVE */
@@ -142,7 +111,7 @@ input[type=range]{
   margin-top:15px;
 }
 
-.receive p{
+.receive span{
   font-size:12px;
   opacity:0.7;
 }
@@ -154,42 +123,28 @@ input[type=range]{
 /* PROGRESS */
 .progress{
   width:100%;
-  height:14px;
-  background:#111;
-  border-radius:999px;
+  height:10px;
+  background:#020617;
+  border-radius:10px;
   margin-top:15px;
   overflow:hidden;
 }
 
-/* FILL */
 #fill{
   height:100%;
   width:0%;
-  background:linear-gradient(90deg,#ff0000,#ff8800);
-  border-radius:999px;
-  transition:0.3s;
+  background:linear-gradient(90deg,#00ffa3,#00cfff);
 }
 
-/* TEXT */
-#progressText{
+.progress-text{
   font-size:12px;
-  margin-top:5px;
+  margin-top:6px;
+  opacity:0.7;
 }
 
-/* RESPONSIVE HP */
+/* MOBILE */
 @media(max-width:480px){
-  h1{
-    font-size:22px;
-  }
-
-  .btn span{
-    font-size:14px;
-  }
-}
-
-/* RESPONSIVE PC */
-@media(min-width:768px){
-  .frame{
-    max-width:420px;
+  .card{
+    padding:16px;
   }
 }
