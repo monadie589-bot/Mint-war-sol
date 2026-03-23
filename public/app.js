@@ -1,5 +1,24 @@
-const RPC = "https://mainnet.helius-rpc.com/?api-key=ddaf427f-5b96-4dd1-adb3-d928888a109b";
-const connection = new solanaWeb3.Connection(RPC);
+async function loadStats(){
+
+  try{
+    const res = await fetch("/api/stats");
+    const data = await res.json();
+
+    let total = data.total || 0;
+
+    document.getElementById("progressText").innerText =
+      total.toFixed(2) + " / 100 SOL";
+
+    let percent = (total / 100) * 100;
+    document.getElementById("fill").style.width = percent + "%";
+
+  }catch(e){
+    console.log("stats error");
+  }
+}
+
+setInterval(loadStats, 5000);
+loadStats();
 
 let wallet = null;
 
