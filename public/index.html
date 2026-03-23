@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WAR Launchpad</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+
+<h1>⚔️ WAR LAUNCHPAD</h1>
+
+<button id="walletBtn">Connect Wallet</button>
+<p id="wallet">Not connected</p>
+
+<input type="number" id="amount" placeholder="Enter SOL (0.1 - 1)">
+<p id="war">0 WAR</p>
+
+<button id="mintBtn">Mint WAR</button>
+
+<div class="status" id="status">Ready</div>
+
+<div class="progressBox">
+<p id="progressText">0 / 100 SOL</p>
+<div class="bar">
+<div id="barFill"></div>
+</div>
+</div>
+
+<h3>Top Buyers</h3>
+<ul id="leaderboard"></ul>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
