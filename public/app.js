@@ -18,7 +18,7 @@ walletBtn.onclick = async () => {
     await window.solana.disconnect();
     wallet = null;
     walletText.innerText = "Not connected";
-    walletBtn.innerText = "CONNECT WALLET";
+    walletBtn.innerText = "CONNECT";
   }
 };
 
@@ -43,7 +43,8 @@ function updateWAR(){
 }
 
 document.getElementById("mintBtn").onclick = async () => {
-  if (!wallet) return alert("Connect wallet first");
+
+  if (!wallet) return alert("Connect wallet");
 
   let amount = parseFloat(input.value);
 
@@ -66,7 +67,7 @@ document.getElementById("mintBtn").onclick = async () => {
     const signed = await window.solana.signTransaction(tx);
     const sig = await connection.sendRawTransaction(signed.serialize());
 
-    alert("SUCCESS: " + sig);
+    alert("SUCCESS");
 
     updateProgress(amount);
 
