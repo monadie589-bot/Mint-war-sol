@@ -1,79 +1,90 @@
-*{
-  box-sizing:border-box;
-}
-
 body{
   margin:0;
-  font-family:sans-serif;
-  background:url('bg.jpg') center/cover no-repeat;
-  color:white;
+  font-family:Arial;
+  background:#f5f5f5;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
 }
 
-.overlay{
-  position:absolute;
+.wrapper{
   width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:center;
 }
 
-.container{
-  position:relative;
-  z-index:2;
+.card{
   width:90%;
-  max-width:420px;
-  background:rgba(0,0,0,0.85);
+  max-width:380px;
+  background:white;
   padding:20px;
-  border-radius:15px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
   text-align:center;
 }
 
-button, input{
-  width:100%;
-  padding:14px;
-  margin-top:12px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
-}
-
-input{
-  background:#111;
-  color:white;
-}
-
-.quick{
-  display:flex;
-  gap:8px;
-}
-
-.quick button{
-  flex:1;
-  background:#1a1a1a;
-  color:#00ffc3;
-  border:1px solid #00ffc3;
+h1{
+  margin-bottom:10px;
 }
 
 button{
-  background:linear-gradient(90deg,#00ffc3,#0099ff);
-  color:black;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  margin-top:10px;
   font-weight:bold;
+  cursor:pointer;
+}
+
+#walletBtn{
+  background:#000;
+  color:white;
+}
+
+#mintBtn{
+  background:red;
+  color:white;
+}
+
+.amount{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:15px;
+}
+
+input[type=range]{
+  flex:1;
+}
+
+.inputBox input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  margin-top:10px;
+}
+
+.receive{
+  margin-top:15px;
+}
+
+.progress{
+  margin-top:20px;
 }
 
 .bar{
+  width:100%;
   height:10px;
-  background:#111;
-  margin-top:12px;
+  background:#eee;
   border-radius:10px;
-  overflow:hidden;
 }
 
 #fill{
   height:100%;
   width:0%;
-  background:linear-gradient(90deg,#00ffc3,#0099ff);
-  box-shadow:0 0 10px #00ffc3;
+  background:red;
+  border-radius:10px;
 }
