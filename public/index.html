@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WAR Launchpad</title>
 
 <link rel="stylesheet" href="style.css">
-
 <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
 </head>
 
@@ -16,30 +14,26 @@
 
 <div class="container">
 
-  <div class="header">
-    ⚔️ WAR LAUNCHPAD
-  </div>
+<h1>⚔️ WAR ⚔️</h1>
 
-  <div class="countdown" id="countdown">Loading...</div>
+<div id="countdown">Loading...</div>
 
-  <button class="btn" id="connectBtn">Connect Wallet</button>
-  <div class="wallet" id="wallet">Not connected</div>
+<button id="connectBtn">Connect Wallet</button>
+<div id="wallet">Not connected</div>
 
-  <input class="input" id="amount" placeholder="Enter SOL amount" type="number">
+<input id="amount" type="number" placeholder="0.1 - 1 SOL">
 
-  <div class="result" id="result">0 WAR</div>
+<div id="result">0 WAR</div>
 
-  <button class="btn mint" id="mintBtn">Mint WAR</button>
+<button id="mintBtn">Mint WAR</button>
 
-  <div class="progress-box">
-    <div class="progress-text">
-      <span>Progress</span>
-      <span id="progressPercent">0%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-  </div>
+<div id="raised">0 / 100 SOL</div>
+
+<div class="bar">
+<div id="fill"></div>
+</div>
+
+<div id="percent">0%</div>
 
 </div>
 
