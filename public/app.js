@@ -60,35 +60,40 @@ function update(){
   warText.innerText = (val * 100000).toLocaleString()+" WAR";
 }
 
+let lastClick = 0;
+
 document.getElementById("mintBtn").onclick = async () => {
 
-  if (!wallet) return alert("Connect wallet");
-
-  let amount = parseFloat(input.value);
-  if (!amount || amount < 0.1 || amount > 1) return alert("Invalid");
-
-  try{
-    const tx = new solanaWeb3.Transaction().add(
-      solanaWeb3.SystemProgram.transfer({
-        fromPubkey: window.solana.publicKey,
-        toPubkey: new solanaWeb3.PublicKey("Egp6tFjnQV9pZ277rS2m16fQbFPKYeZKGQ5RVYd9Mxec"),
-        lamports: amount * solanaWeb3.LAMPORTS_PER_SOL
-      })
-    );
-
-    tx.feePayer = window.solana.publicKey;
-    tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
-
-    const signed = await window.solana.signTransaction(tx);
-    const sig = await connection.sendRawTransaction(signed.serialize());
-
-    alert("Success");
-
-    updateProgress(amount);
-
-  } catch(e){
-    alert("Error");
+  if (Date.now() - lastClick < 5000){
+    return alert("Wait 5 seconds...");
   }
+
+  lastClick = Date.now();
+
+  if (!window.solana) return alert("Install wallet");
+
+  const provider = window.solana;
+  await provider.connect();
+
+  const amount = parseFloat(document.getElementById("solInput").value);
+
+  const tx = new solanaWeb3.Transaction().add(
+    solanaWeb3.SystemProgram.transfer({
+      fromPubkey: provider.publicKey,
+      toPubkey: new solanaWeb3.PublicKey("Egp6tFjnQV9pZ277rS2m16fQbFPKYeZKGQ5RVYd9Mxec"),
+      lamports: amount * solanaWeb3.LAMPORTS_PER_SOL
+    })
+  );
+
+  const connection = new solanaWeb3.Connection("https://api.mainnet-beta.solana.com");
+
+  tx.feePayer = provider.publicKey;
+  tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+
+  const signed = await provider.signTransaction(tx);
+  const sig = await connection.sendRawTransaction(signed.serialize());
+
+  alert("Success: " + sig);
 };
 
 let total = 0;
