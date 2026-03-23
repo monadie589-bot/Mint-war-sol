@@ -24,28 +24,38 @@ body{
   text-align:center;
 }
 
-h1{
-  margin-bottom:10px;
+*{
+  box-sizing:border-box;
 }
 
 button{
   width:100%;
-  padding:14px;
+  padding:14px 16px;
   border:none;
-  border-radius:12px;
-  margin-top:10px;
-  font-weight:bold;
+  border-radius:999px;
+  margin-top:12px;
+  font-weight:600;
+  font-size:15px;
   cursor:pointer;
+  transition:0.2s;
 }
+
 
 #walletBtn{
-  background:#000;
+  background:#111;
   color:white;
 }
 
+
 #mintBtn{
-  background:red;
+  background:#ff2b2b;
   color:white;
+}
+
+
+button:hover{
+  transform:scale(0.98);
+  opacity:0.9;
 }
 
 .amount{
