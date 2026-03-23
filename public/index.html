@@ -3,43 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WAR Mint</title>
+<title>WAR GAME UI</title>
+
 <link rel="stylesheet" href="style.css">
 <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
 </head>
+
 <body>
 
-<div class="wrapper">
-  <div class="card">
+<div class="bg"></div>
 
-    <h1>⚔ WAR</h1>
+<div class="game">
 
-    <button id="walletBtn">CONNECT WALLET</button>
+  <div class="frame">
+
+    <h1>⚔ WAR ⚔</h1>
+
+    <button id="walletBtn" class="btn connect">
+      <span>CONNECT</span>
+    </button>
+
     <div id="wallet">Not connected</div>
 
-    <div class="amountBox">
+    <div class="sliderBox">
       <span>0.1</span>
-      <input type="range" min="0.1" max="1" step="0.1" id="slider">
+      <input type="range" id="slider" min="0.1" max="1" step="0.1">
       <span>1</span>
     </div>
 
-    <input type="number" id="solInput" placeholder="Enter SOL">
+    <div class="inputWrap">
+      <input type="number" id="solInput" placeholder="ENTER SOL">
+    </div>
 
     <div class="receive">
-      YOU RECEIVE
+      <p>YOU GET</p>
       <h2 id="warAmount">0 WAR</h2>
     </div>
 
-    <button id="mintBtn">MINT WAR</button>
+    <button id="mintBtn" class="btn mint">
+      <span>MINT WAR</span>
+    </button>
 
     <div class="progress">
-      <p id="progressText">0 / 500 SOL</p>
-      <div class="bar">
-        <div id="fill"></div>
-      </div>
+      <div id="fill"></div>
     </div>
 
+    <p id="progressText">0 / 100 SOL</p>
+
   </div>
+
 </div>
 
 <script src="app.js"></script>
