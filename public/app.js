@@ -12,19 +12,16 @@ walletBtn.onclick = async () => {
   if (!wallet) {
     const res = await window.solana.connect();
     wallet = res.publicKey.toString();
-
     walletText.innerText = wallet.slice(0,4)+"..."+wallet.slice(-4);
     walletBtn.innerText = "DISCONNECT";
   } else {
     await window.solana.disconnect();
     wallet = null;
-
     walletText.innerText = "Not connected";
     walletBtn.innerText = "CONNECT WALLET";
   }
 };
 
-/* SLIDER */
 const slider = document.getElementById("slider");
 const input = document.getElementById("solInput");
 const warText = document.getElementById("warAmount");
@@ -45,9 +42,7 @@ function updateWAR(){
   warText.innerText = war.toLocaleString() + " WAR";
 }
 
-/* MINT FUNCTION */
 document.getElementById("mintBtn").onclick = async () => {
-
   if (!wallet) return alert("Connect wallet first");
 
   let amount = parseFloat(input.value);
@@ -57,7 +52,6 @@ document.getElementById("mintBtn").onclick = async () => {
   }
 
   try{
-
     const tx = new solanaWeb3.Transaction().add(
       solanaWeb3.SystemProgram.transfer({
         fromPubkey: window.solana.publicKey,
@@ -77,11 +71,10 @@ document.getElementById("mintBtn").onclick = async () => {
     updateProgress(amount);
 
   } catch(e){
-    alert("ERROR: " + e.message);
+    alert("ERROR");
   }
 };
 
-/* PROGRESS */
 let total = 0;
 
 function updateProgress(amount){
