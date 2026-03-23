@@ -1,62 +1,62 @@
-const rpc = "https://mainnet.helius-rpc.com/?api-key=ddaf427f-5b96-4dd1-adb3-d928888a109b";
-const connection = new solanaWeb3.Connection(rpc);
+const RPC = "https://mainnet.helius-rpc.com/?api-key=ddaf427f-5b96-4dd1-adb3-d928888a109b";
+const RECEIVER = "Egp6tFjnQV9pZ277rS2m16fQbFPKYeZKGQ5RVYd9Mxec";
+
+const connection = new solanaWeb3.Connection(RPC);
 
 let wallet = null;
+let lastMintTime = 0;
 
-const walletBtn = document.getElementById("walletBtn");
-const walletAddress = document.getElementById("walletAddress");
-const mintBtn = document.getElementById("mintBtn");
+const maxCap = 100; // total target SOL
+const saleEnd = new Date("2026-04-01T00:00:00");
+
+const connectBtn = document.getElementById("connectBtn");
+const walletText = document.getElementById("wallet");
 const amountInput = document.getElementById("amount");
-const warAmount = document.getElementById("warAmount");
-const statusText = document.getElementById("status");
-const progressBar = document.getElementById("progressBar");
+const resultText = document.getElementById("result");
+const mintBtn = document.getElementById("mintBtn");
 
-walletBtn.onclick = async () => {
-  if (!window.solana) {
-    alert("Install Phantom Wallet");
-    return;
-  }
+connectBtn.onclick = async () => {
+  if (!window.solana) return alert("Install Phantom");
 
   if (!wallet) {
     const res = await window.solana.connect();
     wallet = res.publicKey.toString();
 
-    walletAddress.innerText = wallet.slice(0,4) + "..." + wallet.slice(-4);
-    walletBtn.innerText = "Disconnect";
+    walletText.innerText = wallet.slice(0,4)+"..."+wallet.slice(-4);
+    connectBtn.innerText = "Disconnect";
   } else {
     wallet = null;
-    walletAddress.innerText = "Not connected";
-    walletBtn.innerText = "Connect Wallet";
+    walletText.innerText = "Not connected";
+    connectBtn.innerText = "Connect Wallet";
   }
 };
 
 amountInput.oninput = () => {
-  const val = parseFloat(amountInput.value) || 0;
-  const war = val * 100000;
-  warAmount.innerText = war.toLocaleString() + " WAR";
+  const val = parseFloat(amountInput.value)||0;
+
+  if (val < 0.1) return resultText.innerText="Min 0.1 SOL";
+  if (val > 1) return resultText.innerText="Max 1 SOL";
+
+  resultText.innerText = (val*100000).toLocaleString()+" WAR";
 };
 
 mintBtn.onclick = async () => {
-  if (!wallet) {
-    alert("Connect wallet first");
-    return;
-  }
+  if (!wallet) return alert("Connect wallet");
 
-  const amount = parseFloat(amountInput.value);
+  const now = Date.now();
+  if (now - lastMintTime < 5000) return alert("Slow down");
 
-  if (amount < 0.1 || amount > 1) {
-    alert("Min 0.1 SOL, Max 1 SOL");
-    return;
-  }
+  const val = parseFloat(amountInput.value);
+  if (!val || val < 0.1 || val > 1) return alert("Invalid");
 
   try {
-    statusText.innerText = "Processing...";
+    mintBtn.disabled = true;
 
     const tx = new solanaWeb3.Transaction().add(
       solanaWeb3.SystemProgram.transfer({
         fromPubkey: new solanaWeb3.PublicKey(wallet),
-        toPubkey: new solanaWeb3.PublicKey("Egp6tFjnQV9pZ277rS2m16fQbFPKYeZKGQ5RVYd9Mxec"),
-        lamports: amount * 1e9
+        toPubkey: new solanaWeb3.PublicKey(RECEIVER),
+        lamports: val * solanaWeb3.LAMPORTS_PER_SOL
       })
     );
 
@@ -68,21 +68,49 @@ mintBtn.onclick = async () => {
     const signed = await window.solana.signTransaction(tx);
     const sig = await connection.sendRawTransaction(signed.serialize());
 
-    await connection.confirmTransaction(sig);
+    lastMintTime = now;
+    alert("SUCCESS: "+sig);
 
-    statusText.innerText = "Success: " + sig;
-
-    updateProgress(amount);
-
-  } catch (err) {
-    statusText.innerText = "Error";
-    console.log(err);
+  } catch(e) {
+    alert("FAILED");
   }
+
+  mintBtn.disabled = false;
 };
 
-let total = 0;
-function updateProgress(amount) {
-  total += amount;
-  const percent = Math.min((total / 100) * 100, 100);
-  progressBar.style.width = percent + "%";
+async function updateProgress() {
+  try {
+    const pubkey = new solanaWeb3.PublicKey(RECEIVER);
+    const balance = await connection.getBalance(pubkey);
+
+    const sol = balance / solanaWeb3.LAMPORTS_PER_SOL;
+    const percent = Math.min((sol / maxCap)*100, 100);
+
+    document.getElementById("progressFill").style.width = percent+"%";
+    document.getElementById("progressPercent").innerText = percent.toFixed(2)+"%";
+
+  } catch(e) {}
 }
+
+setInterval(updateProgress, 5000);
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = saleEnd - now;
+
+  if (diff <= 0) {
+    document.getElementById("countdown").innerText = "SALE ENDED";
+    return;
+  }
+
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+
+  document.getElementById("countdown").innerText =
+    d+"D "+h+"H "+m+"M";
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+updateProgress();
