@@ -4,49 +4,52 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WAR Launchpad</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
+<link rel="stylesheet" href="style.css">
+
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+<script src="https://unpkg.com/@solana/wallet-adapter-wallets@latest/lib/index.iife.js"></script>
+
+</head>
 <body>
 
-<div class="overlay"></div>
+<div class="wrapper">
 
-<div class="container">
+  <div class="card">
 
-  <h1>⚔️ WAR ⚔️</h1>
-  <p id="countdown">Loading...</p>
+    <h1>⚔️WAR⚔️</h1>
 
-  <button id="walletBtn">Connect Wallet</button>
-  <p id="wallet">Not connected</p>
+    <button id="walletBtn">Connect Wallet</button>
+    <p id="wallet">Not connected</p>
 
-  <div class="input-box">
-    <input id="amount" type="number" placeholder="0.1 - 1 SOL" min="0.1" max="1" step="0.01">
-
-    <div class="quick">
-      <button onclick="setAmount(0.1)">0.1</button>
-      <button onclick="setAmount(0.5)">0.5</button>
-      <button onclick="setAmount(1)">MAX</button>
+    <div class="amount">
+      <span>0.1</span>
+      <input type="range" min="0.1" max="1" step="0.1" id="slider">
+      <span>1</span>
     </div>
 
-    <input id="slider" type="range" min="0.1" max="1" step="0.01">
+    <div class="inputBox">
+      <input type="number" id="solInput" placeholder="Enter SOL">
+    </div>
+
+    <div class="receive">
+      <p>You receive</p>
+      <h2 id="warAmount">0 WAR</h2>
+    </div>
+
+    <button id="mintBtn">MINT WAR</button>
+
+    <div class="progress">
+      <p id="progressText">0 / 100 SOL</p>
+      <div class="bar">
+        <div id="fill"></div>
+      </div>
+    </div>
+
   </div>
-
-  <p id="result">0 WAR</p>
-
-  <button id="mintBtn">Mint WAR</button>
-
-  <p id="status">Idle</p>
-
-  <div class="bar">
-    <div id="fill"></div>
-  </div>
-
-  <p id="progressText">0 / 100 SOL</p>
-  <p id="percent">0%</p>
 
 </div>
 
-<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
 <script src="app.js"></script>
 
 </body>
