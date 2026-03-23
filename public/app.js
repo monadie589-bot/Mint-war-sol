@@ -13,12 +13,12 @@ walletBtn.onclick = async () => {
     const res = await window.solana.connect();
     wallet = res.publicKey.toString();
     walletText.innerText = wallet.slice(0,4)+"..."+wallet.slice(-4);
-    walletBtn.innerText = "DISCONNECT";
+    walletBtn.innerText = "Disconnect";
   } else {
     await window.solana.disconnect();
     wallet = null;
     walletText.innerText = "Not connected";
-    walletBtn.innerText = "CONNECT";
+    walletBtn.innerText = "Connect Wallet";
   }
 };
 
@@ -28,18 +28,17 @@ const warText = document.getElementById("warAmount");
 
 slider.oninput = () => {
   input.value = slider.value;
-  updateWAR();
+  update();
 };
 
 input.oninput = () => {
   slider.value = input.value;
-  updateWAR();
+  update();
 };
 
-function updateWAR(){
-  let sol = parseFloat(input.value || 0);
-  let war = sol * 100000;
-  warText.innerText = war.toLocaleString() + " WAR";
+function update(){
+  let val = parseFloat(input.value || 0);
+  warText.innerText = (val * 100000).toLocaleString()+" WAR";
 }
 
 document.getElementById("mintBtn").onclick = async () => {
@@ -47,10 +46,7 @@ document.getElementById("mintBtn").onclick = async () => {
   if (!wallet) return alert("Connect wallet");
 
   let amount = parseFloat(input.value);
-
-  if (!amount || amount < 0.1 || amount > 1){
-    return alert("Min 0.1 - Max 1 SOL");
-  }
+  if (!amount || amount < 0.1 || amount > 1) return alert("Invalid");
 
   try{
     const tx = new solanaWeb3.Transaction().add(
@@ -67,12 +63,12 @@ document.getElementById("mintBtn").onclick = async () => {
     const signed = await window.solana.signTransaction(tx);
     const sig = await connection.sendRawTransaction(signed.serialize());
 
-    alert("SUCCESS");
+    alert("Success");
 
     updateProgress(amount);
 
   } catch(e){
-    alert("ERROR");
+    alert("Error");
   }
 };
 
@@ -82,8 +78,8 @@ function updateProgress(amount){
   total += amount;
 
   document.getElementById("progressText").innerText =
-    total.toFixed(2) + " / 100 SOL";
+    total.toFixed(2)+" / 100 SOL";
 
-  let percent = (total / 100) * 100;
-  document.getElementById("fill").style.width = percent + "%";
+  let percent = (total/100)*100;
+  document.getElementById("fill").style.width = percent+"%";
 }
