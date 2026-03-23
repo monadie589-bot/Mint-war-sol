@@ -1,178 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WAR Launchpad</title>
-
-<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #0f2027, #000);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.container {
-  width: 90%;
-  max-width: 420px;
-  background: rgba(0,0,0,0.8);
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(0,255,150,0.3);
-}
-
-h1 {
-  text-align: center;
-  color: #00ffc3;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  margin-top: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  background: linear-gradient(90deg,#00ffc3,#00aaff);
-  color: black;
-  font-weight: bold;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  margin-top: 10px;
-  background: #111;
-  color: white;
-}
-
-.status {
-  text-align: center;
-  margin-top: 10px;
-  color: #00ffc3;
-}
-
-.wallet {
-  text-align: center;
-  font-size: 13px;
-  opacity: 0.7;
-}
-
-/* RESPONSIVE PC */
-@media (min-width: 768px) {
-  body {
-    height: 100vh;
-  }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WAR Launchpad</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-
 <body>
 
+<div class="overlay"></div>
+
 <div class="container">
+
   <h1>⚔️ WAR LAUNCHPAD</h1>
 
   <button id="walletBtn">Connect Wallet</button>
-  <div class="wallet" id="walletAddress">Not connected</div>
+  <p id="walletAddress">Not connected</p>
 
-  <input type="number" id="amount" placeholder="Enter SOL (0.1 - 1)">
-  <div class="status" id="preview">0 WAR</div>
+  <input type="number" id="amount" placeholder="Enter SOL amount" min="0.1" max="1" step="0.1"/>
+
+  <p id="warAmount">0 WAR</p>
 
   <button id="mintBtn">Mint WAR</button>
-  <div class="status" id="status">Idle</div>
+
+  <div class="progressBox">
+    <div id="progressBar"></div>
+  </div>
+
+  <p id="status">Idle</p>
+
 </div>
 
-<script>
-const RPC = "https://mainnet.helius-rpc.com/?api-key=ddaf427f-5b96-4dd1-adb3-d928888a109b";
-const RECEIVER = "Egp6tFjnQV9pZ277rS2m16fQbFPKYeZKGQ5RVYd9Mxec";
-
-const connection = new solanaWeb3.Connection(RPC);
-
-let wallet = null;
-
-const btn = document.getElementById("walletBtn");
-const walletText = document.getElementById("walletAddress");
-const amountInput = document.getElementById("amount");
-const preview = document.getElementById("preview");
-const status = document.getElementById("status");
-
-function short(addr){
-  return addr.slice(0,4) + "..." + addr.slice(-4);
-}
-
-btn.onclick = async () => {
-  if (!window.solana) {
-    alert("Install Phantom Wallet");
-    return;
-  }
-
-  if (!wallet) {
-    const res = await window.solana.connect();
-    wallet = res.publicKey.toString();
-    walletText.innerText = short(wallet);
-    btn.innerText = "Disconnect";
-  } else {
-    wallet = null;
-    walletText.innerText = "Not connected";
-    btn.innerText = "Connect Wallet";
-  }
-};
-
-amountInput.oninput = () => {
-  let sol = parseFloat(amountInput.value) || 0;
-
-  if (sol > 1) sol = 1;
-  if (sol < 0.1) sol = 0;
-
-  const war = sol * 100000;
-  preview.innerText = war.toLocaleString() + " WAR";
-};
-
-document.getElementById("mintBtn").onclick = async () => {
-  try {
-    if (!wallet) return alert("Connect wallet first");
-
-    let sol = parseFloat(amountInput.value);
-    if (sol < 0.1 || sol > 1) return alert("Min 0.1 SOL - Max 1 SOL");
-
-    status.innerText = "Processing...";
-
-    const tx = new solanaWeb3.Transaction().add(
-      solanaWeb3.SystemProgram.transfer({
-        fromPubkey: window.solana.publicKey,
-        toPubkey: new solanaWeb3.PublicKey(RECEIVER),
-        lamports: sol * solanaWeb3.LAMPORTS_PER_SOL
-      })
-    );
-
-    tx.feePayer = window.solana.publicKey;
-    tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
-
-    const signed = await window.solana.signTransaction(tx);
-    const sig = await connection.sendRawTransaction(signed.serialize());
-
-    status.innerText = "Success: " + sig;
-
-  } catch (err) {
-    console.error(err);
-    status.innerText = "Error";
-  }
-};
-</script>
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
