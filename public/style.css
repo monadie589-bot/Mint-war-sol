@@ -12,7 +12,12 @@ body{
   height:100vh;
 }
 
-/* CARD */
+.wrapper{
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+
 .card{
   width:90%;
   max-width:380px;
@@ -21,16 +26,24 @@ body{
   padding:20px;
   text-align:center;
   border:4px solid black;
-  box-shadow:6px 6px 0px black;
+  box-shadow:6px 6px 0 black;
 }
 
-/* TITLE */
 h1{
-  font-size:28px;
+  font-size:26px;
   margin-bottom:10px;
 }
 
-/* BUTTON STYLE TEMPUS */
+#wallet{
+  margin-top:10px;
+  padding:10px;
+  border:3px solid black;
+  border-radius:999px;
+  font-size:13px;
+  background:#f5f5f5;
+  box-shadow:3px 3px 0 black;
+}
+
 button{
   width:100%;
   padding:15px;
@@ -43,47 +56,82 @@ button{
   transition:0.1s;
 }
 
-/* CONNECT */
 #walletBtn{
   background:black;
   color:white;
+  box-shadow:3px 3px 0 black;
 }
 
-/* MINT */
+#walletBtn:active{
+  transform:translateY(2px);
+  box-shadow:1px 1px 0 black;
+}
+
 #mintBtn{
   background:#ff2b2b;
   color:white;
-  box-shadow:0 5px 0 black;
+  box-shadow:4px 4px 0 black;
 }
 
 #mintBtn:active{
   transform:translateY(3px);
-  box-shadow:0 2px 0 black;
+  box-shadow:2px 2px 0 black;
 }
 
-/* INPUT */
 input{
   width:100%;
-  padding:14px;
+  padding:16px 18px;
   border-radius:999px;
   border:3px solid black;
-  margin-top:10px;
-  font-size:14px;
+  margin-top:12px;
+  font-size:15px;
+  outline:none;
+  box-shadow:3px 3px 0 black;
 }
 
-/* SLIDER */
 .amountBox{
   display:flex;
   align-items:center;
   gap:10px;
-  margin-top:10px;
+  margin-top:12px;
+  padding:10px 14px;
+  border:3px solid black;
+  border-radius:999px;
+  background:#f5f5f5;
+  box-shadow:3px 3px 0 black;
+}
+
+.amountBox span{
+  font-size:13px;
+  font-weight:bold;
 }
 
 input[type=range]{
   flex:1;
+  appearance:none;
+  height:6px;
+  background:black;
+  border-radius:999px;
 }
 
-/* RECEIVE */
+input[type=range]::-webkit-slider-thumb{
+  appearance:none;
+  width:18px;
+  height:18px;
+  background:#ff2b2b;
+  border-radius:50%;
+  border:3px solid black;
+  cursor:pointer;
+}
+
+input[type=range]::-moz-range-thumb{
+  width:18px;
+  height:18px;
+  background:#ff2b2b;
+  border-radius:50%;
+  border:3px solid black;
+}
+
 .receive{
   margin-top:15px;
   font-size:12px;
@@ -91,21 +139,32 @@ input[type=range]{
 
 .receive h2{
   margin:5px 0;
+  font-size:20px;
 }
 
-/* PROGRESS */
+.progress{
+  margin-top:15px;
+}
+
+#progressText{
+  font-size:12px;
+}
+
 .bar{
   width:100%;
-  height:12px;
+  height:14px;
   background:#eee;
-  border-radius:10px;
-  margin-top:10px;
-  border:2px solid black;
+  border-radius:999px;
+  margin-top:8px;
+  border:3px solid black;
+  overflow:hidden;
+  box-shadow:2px 2px 0 black;
 }
 
 #fill{
   height:100%;
   width:0%;
   background:#ff2b2b;
-  border-radius:10px;
+  border-radius:999px;
+  transition:0.3s;
 }
