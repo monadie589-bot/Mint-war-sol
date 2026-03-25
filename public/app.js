@@ -43,7 +43,7 @@ walletBtn.onclick = async () => {
 
 const slider = document.getElementById("slider");
 const input = document.getElementById("solInput");
-const warText = document.getElementById("warAmount");
+const warText = document.getElementById("optimusAmount");
 
 slider.oninput = () => {
   input.value = slider.value;
@@ -57,7 +57,7 @@ input.oninput = () => {
 
 function update(){
   let val = parseFloat(input.value || 0);
-  warText.innerText = (val * 100000).toLocaleString()+" WAR";
+  warText.innerText = (val * 100000).toLocaleString()+" OPTIMUS";
 }
 
 let lastClick = 0;
